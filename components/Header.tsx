@@ -9,14 +9,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
 export default function Header() {
-  const [mounted, setMounted] = useState(false);
   const items = useCartStore((state) => state.items);
   const { isAuthenticated, user, logout } = useAuthStore();
   const [showUserMenu, setShowUserMenu] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -38,7 +33,7 @@ export default function Header() {
             <Button variant="ghost" size="icon" asChild className="relative text-gray-700 hover:text-gray-900">
               <Link href="/cart">
                 <ShoppingCartIcon className="h-5 w-5" />
-                {mounted && totalItems > 0 && (
+                {totalItems > 0 && (
                   <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-gray-900 text-white">
                     {totalItems}
                   </Badge>
@@ -53,14 +48,14 @@ export default function Header() {
                 className="gap-2 text-gray-700 hover:text-gray-900"
               >
                 <UserIcon className="h-5 w-5" />
-                {mounted && isAuthenticated && user && (
+                {isAuthenticated && user && (
                   <span className="text-sm hidden sm:inline">{user.username}</span>
                 )}
               </Button>
 
               {showUserMenu && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-50">
-                  {mounted && isAuthenticated ? (
+                  {isAuthenticated ? (
                     <Button
                       variant="ghost"
                       onClick={() => {

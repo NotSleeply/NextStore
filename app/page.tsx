@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { Product } from '@/types/product';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
@@ -120,12 +119,12 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
         {/* 分类筛选 */}
-        <div className="mb-8">
-          <div className="flex flex-wrap gap-3">
+        <div className="mb-8 py-4">
+          <div className="flex flex-wrap gap-4 justify-center">
             <Button
               variant={selectedCategory === 'all' ? 'default' : 'outline'}
               onClick={() => setSelectedCategory('all')}
-              className="rounded-full"
+              className="rounded-full min-w-[160px] px-6 py-2"
             >
               全部
             </Button>
@@ -134,7 +133,7 @@ export default function Home() {
                 key={category}
                 variant={selectedCategory === category ? 'default' : 'outline'}
                 onClick={() => setSelectedCategory(category)}
-                className="capitalize rounded-full"
+                className="capitalize rounded-full min-w-[160px] px-6 py-2"
               >
                 {category}
               </Button>
@@ -143,7 +142,7 @@ export default function Home() {
         </div>
 
         {/* 商品网格 */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="py-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {displayedProducts.map((product, index) => (
             <Link
               key={product.id}

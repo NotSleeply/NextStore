@@ -183,12 +183,12 @@ export default function ProductDetail() {
                 </p>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex gap-6 mx-auto justify-center items-center w-full max-w-3xl">
                 <Button
                   onClick={handleAddToCart}
                   size="lg"
                   variant="outline"
-                  className="flex-1 gap-2 border-gray-900 text-gray-900 hover:bg-gray-100"
+                  className="flex-none w-full max-w-[300px] gap-2 border-gray-900 text-gray-900 hover:bg-gray-100 min-w-[180px]"
                 >
                   <ShoppingCartIcon className="h-5 w-5" />
                   加入购物车
@@ -208,7 +208,7 @@ export default function ProductDetail() {
                     }
                   }}
                   size="lg"
-                  className="flex-1 gap-2 bg-gray-900 hover:bg-gray-800"
+                  className="flex-none w-full max-w-[300px] gap-2 bg-gray-900 hover:bg-gray-800 min-w-[180px]"
                 >
                   立即购买
                 </Button>
