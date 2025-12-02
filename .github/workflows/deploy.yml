@@ -41,6 +41,7 @@ jobs:
         run: pnpm run build
         env:
           NODE_ENV: production
+          DEPLOY_TARGET: github-pages
 
       - name: 📤 上传构建产物
         uses: actions/upload-pages-artifact@v3
