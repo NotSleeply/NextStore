@@ -5,6 +5,8 @@ import { useCartStore } from '@/store/cartStore';
 import { useAuthStore } from '@/store/authStore';
 import { ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
@@ -19,58 +21,65 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-blue-600 hover:text-blue-700">
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-4" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors">
             NextStore
           </Link>
 
-          <nav className="flex items-center space-x-6">
-            <Link href="/" className="text-gray-700 hover:text-blue-600 transition">
-              商品列表
-            </Link>
+          {/* 右侧导航 */}
+          <nav className="flex items-center gap-4">
+            <Button variant="ghost" asChild className="hidden sm:flex text-gray-700 hover:text-gray-900">
+              <Link href="/">商品列表</Link>
+            </Button>
 
-            <Link href="/cart" className="relative">
-              <ShoppingCartIcon className="h-6 w-6 text-gray-700 hover:text-blue-600 transition" />
-              {mounted && getTotalItems() > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {getTotalItems()}
-                </span>
-              )}
-            </Link>
+            <Button variant="ghost" size="icon" asChild className="relative text-gray-700 hover:text-gray-900">
+              <Link href="/cart">
+                <ShoppingCartIcon className="h-5 w-5" />
+                {mounted && getTotalItems() > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-gray-900">
+                    {getTotalItems()}
+                  </Badge>
+                )}
+              </Link>
+            </Button>
 
             <div className="relative">
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition"
+                className="gap-2 text-gray-700 hover:text-gray-900"
               >
-                <UserIcon className="h-6 w-6" />
+                <UserIcon className="h-5 w-5" />
                 {mounted && isAuthenticated && user && (
-                  <span className="text-sm">{user.username}</span>
+                  <span className="text-sm hidden sm:inline">{user.username}</span>
                 )}
-              </button>
+              </Button>
 
               {showUserMenu && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-50">
                   {mounted && isAuthenticated ? (
-                    <button
+                    <Button
+                      variant="ghost"
                       onClick={() => {
                         logout();
                         setShowUserMenu(false);
                       }}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="w-full justify-start text-gray-700 hover:bg-gray-100"
                     >
                       退出登录
-                    </button>
+                    </Button>
                   ) : (
-                    <Link
-                      href="/login"
-                      onClick={() => setShowUserMenu(false)}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      登录
-                    </Link>
+                    <Button variant="ghost" asChild className="w-full justify-start text-gray-700 hover:bg-gray-100">
+                      <Link
+                        href="/login"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        登录
+                      </Link>
+                    </Button>
                   )}
                 </div>
               )}

@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { UserIcon } from '@heroicons/react/24/outline';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -52,7 +55,7 @@ export default function LoginPage() {
 
   if (isAuthenticated) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="min-h-[60vh] flex items-center justify-center max-w-md mx-auto px-4">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
           <p className="mt-4 text-gray-600">正在跳转...</p>
@@ -62,83 +65,78 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          {/* 标题 */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-              <UserIcon className="h-8 w-8 text-blue-600" />
-            </div>
-            <h1 className="text-2xl font-bold text-gray-800">欢迎登录</h1>
-            <p className="text-gray-600 mt-2">请登录以继续购物</p>
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 py-12">
+      <Card className="w-full max-w-md border-gray-200">
+        <CardHeader className="text-center space-y-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-900 rounded-full mb-2 mx-auto">
+            <UserIcon className="h-8 w-8 text-white" />
           </div>
+          <CardTitle className="text-2xl font-bold text-gray-900">欢迎登录</CardTitle>
+          <CardDescription className="text-gray-600">请登录以继续购物</CardDescription>
+        </CardHeader>
 
-          {/* 登录表单 */}
+        <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
 
-            <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+            <div className="space-y-2">
+              <label htmlFor="username" className="text-sm font-medium text-gray-700">
                 用户名
               </label>
-              <input
+              <Input
                 type="text"
                 id="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                 placeholder="请输入用户名"
                 disabled={loading}
+                className="border-gray-300"
               />
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <div className="space-y-2">
+              <label htmlFor="password" className="text-sm font-medium text-gray-700">
                 密码
               </label>
-              <input
+              <Input
                 type="password"
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                 placeholder="请输入密码（至少6位）"
                 disabled={loading}
+                className="border-gray-300"
               />
             </div>
 
-            <button
+            <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gray-900 hover:bg-gray-800"
+              size="lg"
             >
               {loading ? '登录中...' : '登录'}
-            </button>
+            </Button>
           </form>
+        </CardContent>
 
-          {/* 提示信息 */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              演示用途：输入任意用户名和至少6位密码即可登录
-            </p>
-          </div>
-
-          {/* 返回首页 */}
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => router.push('/')}
-              className="text-blue-600 hover:text-blue-700 text-sm"
-            >
-              返回首页
-            </button>
-          </div>
-        </div>
-      </div>
+        <CardFooter className="flex flex-col gap-4">
+          <p className="text-xs text-center text-gray-500">
+            演示用途：输入任意用户名和至少6位密码即可登录
+          </p>
+          <Button
+            variant="outline"
+            onClick={() => router.push('/')}
+            className="w-full"
+          >
+            返回首页
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
