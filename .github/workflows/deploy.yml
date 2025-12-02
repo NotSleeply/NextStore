@@ -41,7 +41,6 @@ jobs:
         run: pnpm run build
         env:
           NODE_ENV: production
-          NEXT_PUBLIC_BASE_PATH: /Nebula
 
       - name: 📤 上传构建产物
         uses: actions/upload-pages-artifact@v3
