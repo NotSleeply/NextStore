@@ -130,8 +130,8 @@ export default function ProductDetail() {
         <Card className="border-gray-200">
           <div className="grid md:grid-cols-2 gap-8 p-6 md:p-10">
             {/* 商品图片 - 懒加载 */}
-            <div className="relative">
-              <div className="relative h-96 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+            <div className="flex items-center justify-center">
+              <div className="relative w-full h-96 bg-gray-50 rounded-lg overflow-hidden border border-gray-200 flex items-center justify-center">
                 {!imageLoaded && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="animate-spin rounded-full h-10 w-10 border-2 border-gray-900 border-t-transparent"></div>
@@ -152,7 +152,7 @@ export default function ProductDetail() {
             </div>
 
             {/* 商品信息 */}
-            <div className="flex flex-col">
+            <div className="flex flex-col justify-center">
               <Badge className="mb-4 w-fit capitalize bg-gray-100 text-gray-900">
                 {product.category}
               </Badge>
@@ -183,14 +183,34 @@ export default function ProductDetail() {
                 </p>
               </div>
 
-              <div className="mt-auto">
+              <div className="flex gap-3">
                 <Button
                   onClick={handleAddToCart}
                   size="lg"
-                  className="w-full gap-2 bg-gray-900 hover:bg-gray-800"
+                  variant="outline"
+                  className="flex-1 gap-2 border-gray-900 text-gray-900 hover:bg-gray-100"
                 >
                   <ShoppingCartIcon className="h-5 w-5" />
                   加入购物车
+                </Button>
+                <Button
+                  onClick={() => {
+                    if (!isAuthenticated) {
+                      setShowMessage('请先登录');
+                      setTimeout(() => {
+                        router.push('/login');
+                      }, 1000);
+                      return;
+                    }
+                    if (product) {
+                      addItem(product);
+                      router.push('/cart');
+                    }
+                  }}
+                  size="lg"
+                  className="flex-1 gap-2 bg-gray-900 hover:bg-gray-800"
+                >
+                  立即购买
                 </Button>
               </div>
             </div>

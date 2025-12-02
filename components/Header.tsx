@@ -10,15 +10,15 @@ import { Badge } from '@/components/ui/badge';
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
-  const getTotalItems = useCartStore((state) => state.getTotalItems);
+  const items = useCartStore((state) => state.items);
   const { isAuthenticated, user, logout } = useAuthStore();
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   useEffect(() => {
-    // 延迟设置 mounted 状态以避免 hydration 问题
-    const timer = setTimeout(() => setMounted(true), 0);
-    return () => clearTimeout(timer);
+    setMounted(true);
   }, []);
+
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
@@ -38,9 +38,9 @@ export default function Header() {
             <Button variant="ghost" size="icon" asChild className="relative text-gray-700 hover:text-gray-900">
               <Link href="/cart">
                 <ShoppingCartIcon className="h-5 w-5" />
-                {mounted && getTotalItems() > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-gray-900">
-                    {getTotalItems()}
+                {mounted && totalItems > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-gray-900 text-white">
+                    {totalItems}
                   </Badge>
                 )}
               </Link>
